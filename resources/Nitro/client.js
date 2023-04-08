@@ -7,19 +7,18 @@ const maxUsage = 5000; // in milliseconds
 const powerIncrease = 5.0; // 1.0 = Normal PowerLevel
 const camShakeIntensity = 2.5;
 
-var nitroOn = false;
 var start = Date.now();
 
+const player = alt.Player.local;
+
 function StartNitro(){
-    alt.emitServer("Server:Nitro:On", alt.Player.local.vehicle);
+    alt.emitServer("Server:Nitro:On", player.vehicle);
     native.shakeGameplayCam("ROAD_VIBRATION_SHAKE", camShakeIntensity);
-    nitroOn = true;
 }
 
 function StopNitro(){
-    alt.emitServer("Server:Nitro:Off", alt.Player.local.vehicle);
+    alt.emitServer("Server:Nitro:Off", player.vehicle);
     native.stopGameplayCamShaking(true);
-    nitroOn = false;
 }
 
 alt.on('leftVehicle', (vehicle, seat) => {
@@ -27,9 +26,9 @@ alt.on('leftVehicle', (vehicle, seat) => {
 });
 
 alt.on('keydown', (key) => {
-    if (key !== toggleKey || !alt.Player.local.vehicle) return; 
+    if (key !== toggleKey || !player.vehicle) return; 
 
-    let nitroMeta = alt.Player.local.vehicle.getStreamSyncedMeta("Nitro");
+    let nitroMeta = player.vehicle.getStreamSyncedMeta("Nitro");
     if (!nitroMeta) return;
 
     const millis = Date.now() - start;
@@ -40,14 +39,14 @@ alt.on('keydown', (key) => {
 });
 
 alt.on('keyup', (key) => {
-    if (key !== toggleKey || !alt.Player.local.vehicle) return;
+    if (key !== toggleKey || !player.vehicle) return;
 
     StopNitro();
 });
 
 alt.everyTick(() => {
-    if (!alt.Player.local.vehicle) return;
-    if (!nitroOn) return;
+    if (!player.vehicle) return;
+    if (!player.vehicle.hasStreamSyncedMeta("nitroMode")) return;
 
     const millis = Date.now() - start;
     if (millis > maxUsage) 
@@ -56,26 +55,26 @@ alt.everyTick(() => {
         return;
     }
 
-    native.setVehicleCheatPowerIncrease(alt.Player.local.vehicle, powerIncrease);
+    native.setVehicleCheatPowerIncrease(player.vehicle, powerIncrease);
 })
 
-alt.onServer("Client:Nitro:Sync", (vehicle, state) =>{
-    if (state){
+function Sync(entity){
+    console.log("instanceof " + entity instanceof alt.Vehicle);
+    if (!(entity instanceof alt.Vehicle)) return;
+
+    console.log("nitroMode " + entity.hasStreamSyncedMeta("nitroMode"))
+    if (entity.hasStreamSyncedMeta("nitroMode")){
         native.requestNamedPtfxAsset('veh_xs_vehicle_mods');
-        native.setOverrideNitrousLevel(vehicle, true, 0.0, 0.0, 0, true);
-    }else{
-        native.setOverrideNitrousLevel(vehicle, false, 0.0, 0.0, 0, true);
+        native.setOverrideNitrousLevel(entity, true, 0.0, 0.0, 0, true);
+        return;
     }
-})
+
+    native.setOverrideNitrousLevel(entity, false, 0.0, 0.0, 0, true);
+}
 
 alt.on("gameEntityCreate", (entity) => {
-    if (entity instanceof alt.Vehicle) 
-    {
-        if (entity.hasSyncedMeta("nitroMode")){
-            native.requestNamedPtfxAsset('veh_xs_vehicle_mods');
-            native.setOverrideNitrousLevel(entity, true, 0.0, 0.0, 0, true);
-        }else{
-            native.setOverrideNitrousLevel(entity, false, 0.0, 0.0, 0, true);
-        }
-    }
+    Sync(entity);
+});
+alt.on("streamSyncedMetaChange", (entity, key, newValue, oldValue) => {
+    Sync(entity);
 });
