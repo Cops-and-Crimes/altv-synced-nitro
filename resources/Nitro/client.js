@@ -59,10 +59,8 @@ alt.everyTick(() => {
 })
 
 function Sync(entity){
-    console.log("instanceof " + entity instanceof alt.Vehicle);
     if (!(entity instanceof alt.Vehicle)) return;
 
-    console.log("nitroMode " + entity.hasStreamSyncedMeta("nitroMode"))
     if (entity.hasStreamSyncedMeta("nitroMode")){
         native.requestNamedPtfxAsset('veh_xs_vehicle_mods');
         native.setOverrideNitrousLevel(entity, true, 0.0, 0.0, 0, true);
