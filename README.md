@@ -15,10 +15,10 @@ Dieses Repository stellt eine alt:V-Ressource bereit, um Fahrzeugen einen Nitro-
 Gleichzeitig werden Flammen am Fahrzeug gesynced.
 
 ## Installation
-Fügen Sie einfach den Ordner `Nitro` in ihren Serverordner `resources` und den Namen dieser Ressource zu Ihrer `server.toml` hinzu.
+Fügen Sie einfach den Ordner `altv-rezondes-nitro` in ihren Serverordner `resources` und den Namen dieser Ressource zu Ihrer `server.toml` hinzu.
 
 ```
-Nitro
+altv-rezondes-nitro
 ```
 
 ## Verwendung
