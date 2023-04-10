@@ -22,6 +22,11 @@ altv-rezondes-nitro
 ```
 
 ## Verwendung
+### _Benutzen_
+Halte die `SHIFT`-Taste im Fahrzeug gedrückt. <br>
+Die maximale Boostzeit beträgt 5sek. Nach einem gestartet Boost gibt es einen Cooldown von 15sek. <br>
+Der Boost kann schon vor den maximalen 5sek abgebrochen werden. <br>
+
 ### _Aktivieren_
 Sie können einem Fahrzeug die Möglichkeit Nitro zu benutzen geben indem Sie diesem die StreamSyncedMetaData `Nitro` geben. <br> 
 <br>
