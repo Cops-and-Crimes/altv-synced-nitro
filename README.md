@@ -5,8 +5,9 @@
 Created by Rezondes
 
 ❤️ Geschrieben für Cops and Crimes <br>
+- [Website](https://copsandcrimes.de) <br>
 - [Discord](http://discord.copsandcrimes.de/) <br>
-- [Patreon](http://patreon.copsandcrimes.de/) <br>
+- [Patreon](https://www.patreon.com/copsandcrimes) <br>
 
 ⭐ Wenn dir dieses Repository geholfen hat!
 
