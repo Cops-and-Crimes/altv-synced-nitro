@@ -27,7 +27,7 @@ alt.on('leftVehicle', (vehicle, seat) => {
 
 alt.on('keydown', (key) => {
     if (key !== toggleKey || !player.vehicle) return; 
-  if (player.seat != 1) return;
+    if (player.seat != 1) return;
 
     let nitroMeta = player.vehicle.getStreamSyncedMeta("Nitro");
     if (!nitroMeta) return;
@@ -41,7 +41,7 @@ alt.on('keydown', (key) => {
 
 alt.on('keyup', (key) => {
     if (key !== toggleKey || !player.vehicle) return;
-  if (player.seat != 1) return;
+    if (player.seat != 1) return;
 
     StopNitro();
 });
@@ -49,7 +49,7 @@ alt.on('keyup', (key) => {
 alt.everyTick(() => {
     if (!player.vehicle) return;
     if (!player.vehicle.hasStreamSyncedMeta("nitroMode")) return;
-  if (player.seat != 1) return;
+    if (player.seat != 1) return;
 
     const millis = Date.now() - start;
     if (millis > maxUsage) 
